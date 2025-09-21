@@ -1,0 +1,30 @@
+{
+  "name": "projetvnet",
+  "version": "1.0.0",
+  "description": "A modern web development learning platform with interactive code editor",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 3000 -o",
+    "build": "echo 'Static site - no build process needed'",
+    "deploy": "echo 'Ready for deployment to any static hosting service'"
+  },
+  "keywords": [
+    "web-development",
+    "learning-platform",
+    "code-editor",
+    "html",
+    "css",
+    "javascript",
+    "education"
+  ],
+  "author": "ProjetVNET Team",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/projetvnet.git"
+  },
+  "homepage": "https://yourusername.github.io/projetvnet"
+}

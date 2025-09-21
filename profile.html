@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - ProjetVNET</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-light);
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .navbar {
+      background: rgba(18, 18, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      color: var(--text-light);
+      font-size: 1.8em;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      color: var(--accent-green);
+      transform: scale(1.05);
+    }
+
+    .logo-projet {
+      color: var(--text-light);
+    }
+
+    .logo-vnet {
+      color: var(--accent-gold);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .back-btn {
+      background: rgba(30, 255, 0, 0.1);
+      border: 1px solid var(--accent-green);
+      color: var(--accent-green);
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-btn:hover {
+      background: var(--accent-green);
+      color: var(--bg-dark);
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(30, 255, 0, 0.4);
+    }
+
+    .notification-bell {
+      position: relative;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5em;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .notification-bell:hover {
+      color: var(--accent-green);
+      background: rgba(30, 255, 0, 0.1);
+      transform: scale(1.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: linear-gradient(45deg, #ff4757, #ff6b7a);
+      color: white;
+      font-size: 0.7em;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      min-width: 18px;
+      text-align: center;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .profile-picture {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--accent-green), var(--accent-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-dark);
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.1);
+      border-color: var(--accent-green);
+      box-shadow: 0 0 20px rgba(30, 255, 0, 0.4);
+    }
+
+    .profile-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 100px auto 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 0 30px rgba(30, 255, 0, 0.2);
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 20% 80%, rgba(30, 255, 0, 0.1) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(247, 221, 173, 0.1) 0%, transparent 50%);
+      animation: backgroundPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes backgroundPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+
+    .profile-header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--accent-green), var(--accent-gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bg-dark);
+      font-weight: bold;
+      font-size: 3em;
+      margin: 0 auto 20px;
+      border: 4px solid var(--border-light);
+      box-shadow: 0 0 30px rgba(30, 255, 0, 0.3);
+      animation: avatarFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes avatarFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .profile-name {
+      color: var(--text-light);
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(45deg, var(--accent-green), var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .profile-email {
+      color: var(--text-muted);
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stat-card {
+      background: rgba(42, 42, 42, 0.8);
+      border: 1px solid var(--border-light);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(30, 255, 0, 0.2);
+      border-color: var(--accent-green);
+    }
+
+    .stat-number {
+      color: var(--accent-green);
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .action-btn {
+      background: linear-gradient(45deg, var(--accent-green), var(--accent-green-alt));
+      color: var(--bg-dark);
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 15px 30px;
+      border-radius: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(30, 255, 0, 0.3);
+    }
+
+    .action-btn:hover {
+      background: linear-gradient(45deg, var(--accent-green-alt), var(--accent-green));
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(30, 255, 0, 0.4);
+    }
+
+    .logout-btn {
+      background: linear-gradient(45deg, #ff4757, #ff6b7a);
+      color: white;
+      border: none;
+      font-size: 1em;
+      font-weight: 600;
+      padding: 15px 30px;
+      border-radius: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    }
+
+    .logout-btn:hover {
+      background: linear-gradient(45deg, #ff6b7a, #ff4757);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .profile-container {
+        padding: 30px 20px;
+        margin: 100px 10px 0;
+      }
+      
+      .profile-name {
+        font-size: 2em;
+      }
+      
+      .profile-email {
+        font-size: 1.1em;
+      }
+      
+      .profile-stats {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .profile-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .profile-container {
+        padding: 20px 15px;
+      }
+      
+      .profile-name {
+        font-size: 1.8em;
+      }
+      
+      .profile-email {
+        font-size: 1em;
+      }
+      
+      .profile-avatar {
+        width: 100px;
+        height: 100px;
+        font-size: 2.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="logo" onclick="showLogoutMessage()">
+      <span class="logo-projet">PROJET</span><span class="logo-vnet">VNET</span>
+    </div>
+    
+    <div class="nav-right">
+      <button class="back-btn" onclick="goBack()" title="Go Back">
+        <i class="fas fa-arrow-left"></i>
+      </button>
+      
+      <button class="notification-bell" onclick="toggleNotifications()">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" id="notificationCount">3</span>
+      </button>
+      
+      <div class="profile-picture" onclick="goToProfile()" id="profilePicture">
+        U
+      </div>
+    </div>
+  </nav>
+
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar" id="profileAvatar">U</div>
+      <h1 class="profile-name" id="profileName">User Name</h1>
+      <p class="profile-email" id="profileEmail">user@example.com</p>
+    </div>
+
+    <div class="profile-stats">
+      <div class="stat-card">
+        <div class="stat-number" id="lessonsCompleted">0</div>
+        <div class="stat-label">Lessons Completed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="hoursStudied">0</div>
+        <div class="stat-label">Hours Studied</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="currentStreak">0</div>
+        <div class="stat-label">Current Streak</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="overallProgress">0%</div>
+        <div class="stat-label">Overall Progress</div>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <a href="dashboard.html" class="action-btn">
+        <i class="fas fa-tachometer-alt"></i>
+        Dashboard
+      </a>
+      <a href="settings.html" class="action-btn">
+        <i class="fas fa-cog"></i>
+        Settings
+      </a>
+      <a href="#" class="action-btn">
+        <i class="fas fa-certificate"></i>
+        Certificates
+      </a>
+      <button class="logout-btn" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Check if user is logged in
+    let isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (!isLoggedIn) {
+      // Redirect to login page if not logged in
+      window.location.href = "login.html";
+    }
+
+    // Update profile information
+    function updateProfileInfo() {
+      let userEmail = localStorage.getItem("userEmail");
+      let userIdentifier = localStorage.getItem("userIdentifier");
+      let username = userEmail || userIdentifier || "Guest";
+      
+      // Get first letter of username/email
+      let initial = username.charAt(0).toUpperCase();
+      
+      // Update profile picture
+      document.getElementById("profilePicture").textContent = initial;
+      document.getElementById("profileAvatar").textContent = initial;
+      
+      // Update profile name and email
+      document.getElementById("profileName").textContent = username;
+      document.getElementById("profileEmail").textContent = userEmail || userIdentifier || "No email provided";
+      
+      // Load real progress statistics
+      loadProgressStats();
+    }
+
+    // Load real progress statistics
+    function loadProgressStats() {
+      const courses = ['html', 'javascript', 'game'];
+      let totalLessonsCompleted = 0;
+      let totalHoursStudied = 0;
+      let currentStreak = parseInt(localStorage.getItem('learningStreak') || '0');
+      let totalPossibleLessons = 0;
+      
+      // Calculate progress for each course
+      courses.forEach(course => {
+        const courseProgress = JSON.parse(localStorage.getItem(`courseProgress_${course}`) || '{}');
+        const completedLessons = Object.values(courseProgress).filter(status => status === 'completed').length;
+        totalLessonsCompleted += completedLessons;
+        totalPossibleLessons += 20; // 20 lessons per course
+        
+        // Calculate hours studied (estimate 30 minutes per lesson)
+        const hoursPerLesson = 0.5;
+        totalHoursStudied += completedLessons * hoursPerLesson;
+      });
+      
+      // Calculate overall progress percentage
+      const overallProgressPercent = totalPossibleLessons > 0 ? 
+        Math.round((totalLessonsCompleted / totalPossibleLessons) * 100) : 0;
+      
+      // Update the display
+      document.getElementById('lessonsCompleted').textContent = totalLessonsCompleted;
+      document.getElementById('hoursStudied').textContent = Math.round(totalHoursStudied);
+      document.getElementById('currentStreak').textContent = currentStreak;
+      document.getElementById('overallProgress').textContent = overallProgressPercent + '%';
+      
+      // Update learning streak if user has been active today
+      updateLearningStreak();
+    }
+
+    // Update learning streak
+    function updateLearningStreak() {
+      const today = new Date().toDateString();
+      const lastActiveDate = localStorage.getItem('lastActiveDate');
+      const currentStreak = parseInt(localStorage.getItem('learningStreak') || '0');
+      
+      if (lastActiveDate !== today) {
+        // Check if it's consecutive day
+        if (lastActiveDate) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayString = yesterday.toDateString();
+          
+          if (lastActiveDate === yesterdayString) {
+            // Consecutive day, increment streak
+            localStorage.setItem('learningStreak', currentStreak + 1);
+          } else {
+            // Not consecutive, reset streak
+            localStorage.setItem('learningStreak', '1');
+          }
+        } else {
+          // First time, start streak
+          localStorage.setItem('learningStreak', '1');
+        }
+        
+        // Update last active date
+        localStorage.setItem('lastActiveDate', today);
+        
+        // Refresh the display
+        document.getElementById('currentStreak').textContent = parseInt(localStorage.getItem('learningStreak') || '0');
+      }
+    }
+
+    // Go to profile page
+    function goToProfile() {
+      window.location.href = "profile.html";
+    }
+
+    // Toggle notifications (placeholder function)
+    function toggleNotifications() {
+      // This would show a notification dropdown in a real app
+      alert("Notifications feature coming soon!");
+    }
+
+    // Logout function
+    function logout() {
+      // Clear all stored user data
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userIdentifier");
+      localStorage.removeItem("action");
+      
+      // Redirect to login page
+      window.location.href = "login.html";
+    }
+
+    // Logo click handler
+    function showLogoutMessage() {
+      alert('To access the landing page, please logout first from your profile.');
+    }
+
+    // Back button function
+    function goBack() {
+      window.history.back();
+    }
+
+    // Initialize profile
+    updateProfileInfo();
+  </script>
+</body>
+</html>
