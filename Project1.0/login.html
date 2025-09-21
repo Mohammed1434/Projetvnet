@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="theme.css">   <!-- theme switch (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>Login - ProjetVNET</title>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><span class="logo-projet">PROJET</span><span class="logo-vnet">VNET</span></a>
+        <nav class="navbar">
+            <a href="index.html#COURSES">COURSES</a>
+            <a href="signup.html">SIGNUP</a>
+            <a href="login.html" class="active">LOGIN</a>
+        </nav>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Welcome Back Sailor</h2>
+                <p>Sign in to your VNET account</p>
+            </div>
+
+            <form class="auth-form" id="loginForm" onsubmit="loginUser(event)">
+                <div class="form-group">
+                    <label for="loginIdentifier">Email or Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="loginIdentifier" name="identifier" required>
+                    </div>
+                    <div class="error-message" id="loginIdentifierError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" name="password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="error-message" id="loginPasswordError"></div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="auth-btn">
+                    <span>Sign In</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="auth-switch">
+                    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+
+     <script>
+    function loginUser(event) {
+      event.preventDefault();
+
+      let identifier = document.getElementById("loginIdentifier").value;
+      let password = document.getElementById("loginPassword").value;
+
+      // Basic validation
+      if (!identifier || !password) {
+        alert("Please fill in all fields");
+        return;
+      }
+
+      // Simple email validation if identifier looks like an email
+      if (identifier.includes("@") && !identifier.includes(".")) {
+        alert("Please enter a valid email address");
+        return;
+      }
+
+      // Store info
+      localStorage.setItem("userIdentifier", identifier);
+      localStorage.setItem("action", "login");
+      localStorage.setItem("isLoggedIn", "true");
+
+      // Redirect to dashboard
+      window.location.href = "dashboard.html";
+    }
+  </script>
+</body>
+</html>
